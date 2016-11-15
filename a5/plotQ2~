@@ -1,0 +1,7 @@
+set terminal pdf
+set output 'q1.typicalSolutions.pdf'
+set ylabel "Psi"
+set xlabel "x"
+plot for [i=0:9] 'Eis0.'.i.'Minus.dat' u 1:2 w d title 'Even Energy = 0.'.i, for [i=0:9] 'Eis1.'.i.'Minus.dat' u 1:2 w d title 'Energy = 1.'.i
+
+plot for [i=0:9] 'Eis0.'.i.'Plus.dat' u 1:2 w d title 'OddEnergy = 0.'.i, for [i=0:9] 'Eis1.'.i.'Plus.dat' u 1:2 w d title 'Energy = 1.'.i

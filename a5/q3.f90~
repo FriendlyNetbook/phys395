@@ -9,6 +9,8 @@ program q2; implicit none
      even(i,:) = bisect(2.0*(i-1), 2.0*i, 1)
      odd(i,:)  = bisect(2.0*(i-1), 2.0*i,-1)
   end do
+  write(*,*) "These are the computed Energy Eigenvalues"
+  write(*,*) even(:,1), odd(:,1)
 
   do i=1,n
      call normalizedDist(even(i,1),even(i,2),[1.0,0.0])

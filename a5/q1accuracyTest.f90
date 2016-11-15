@@ -1,73 +1,38 @@
-program q1
-  real, parameter :: hBar=1, w = 1, m=1
-  real, parameter :: h = 1E-3
-
-  real :: init(2) =[0.0,1.0]
-  integer j
+program spectral; implicit none
+  real, parameter :: pi = 3.141592653589793238462643383279502884197169399375Q0, hbar = 1, m=1
+  integer, parameter :: nn = 200
+  real, parameter :: h = 0.001
+  real x(nn), psi(nn), L(nn,nn), Hamiltonian(nn,nn), identity(nn,nn), potential(nn), lambda, matinv(nn,nn)
+  integer i
+  real :: E=1.5
 
   call initgrid(x, potential)
-  call initl
-  call inith
+  call initl()
+  call inith()
 
   identity = 0
   do i=1,nn
      identity(i,i) = 1
   end do
 
-  ! initialize initial solution guess
-  call evalb(2,x,psi)
-
+  call gl8(psi,h,E)
+  write(*,*) abs(matmul(Hamiltonian,psi)-E*psi)
+  
   
 
-  write(*,*) sum(matmul(H,x)
-  
 contains
-  subroutine integrate(E, init)
-    real psi(2) ! Wavefunction
-    real minusPsi(2) ! Wavefunction given by psi(-x)
-    real x, init(2)
-    real E
-    character (len=40) :: filename, filename2
-    write(filename, '(a, F3.1, a, F2.0,F2.0,a)') "Eis",E,"init",init(1),init(2), "Odd.dat"
-    open(unit = 1, file = filename)
-
-    write(filename2, fmt = '(a, F3.1, a, F2.0, F2.0, a)') "Eis",E,"init",init(1),init(2), "Even.dat"
-    open(unit = 2, file = filename2)
-
-    x=0
-    psi = init
-    minusPsi= init
-    do while  ( abs(psi(1)) < 4.0 .and. ( abs(psi(1)) > 0.1 .or. abs(psi(2)) > 0.1 ) )
-       call gl8(psi,h,x,E)
-       call gl8(minusPsi,-1*h,-1*x,E)
-
-       write(2,*) x, (psi+minusPsi)/2 ! write the even
-       write(2,*) -1*x, (psi+minusPsi)/2 ! write the even
-       write(1,*) x, (psi-minusPsi)/2 ! and odd components
-       write(1,*) -1*x, -1*(psi-minusPsi)/2 ! and odd components
-       x=x+h
-    end do
-
-    close(1)
-    close(2)
-  end subroutine integrate
-  
-  function V(u)
-    real :: u, V
-    V = 0.5*m*(u*w)**2
-  end function V
 
   ! Calculates the derivative of psi
-  subroutine evalf(psi, psiP,x, E)
-    real :: psi(2), psiP(2), x, E
+  subroutine evalf(psi, psiP, E)
+    real :: psi(2), psiP(2),  E
     psiP(1) = psi(2)
     psiP(2) = psi(1)*(V(x) - E)*2*m/(hbar**2)
   end subroutine evalf
 
   ! 8th order implicit Gauss-Legendre integrator
-  subroutine gl8(psi,h, x,E)
+  subroutine gl8(psi,h,E)
     integer, parameter :: s = 4, n = 2
-    real psi(n), g(n,s), h,x, E; integer i, k
+    real psi(n), g(n,s), h, E; integer i, k
 
     ! Butcher tableau for 8th order Gauss-Legendre method
     real, parameter :: a(s,s) = reshape((/ &
@@ -88,13 +53,14 @@ contains
     do k = 1,16
        g = matmul(g,a)
        do i = 1,s
-          call evalf(psi + g(:,i)*h, g(:,i), x, E)
+          call evalf(psi + g(:,i)*h, g(:,i), E)
        end do
     end do
 
     ! update the solution
     psi = psi + matmul(g,b)*h
   end subroutine gl8
+
   ! ititialize grid
   subroutine initgrid(x, potential)
     integer i; real x(nn), potential(nn)
@@ -102,7 +68,6 @@ contains
     forall(i=1:nn) x(i) = atanh(cos(pi*(nn-i+0.5)/nn))
     ! initialize potential
     forall (i=1:nn) potential(i) = V(x(i))
-    h=(x(nn)-x(1))/nn
   end subroutine initgrid
 
 
@@ -186,4 +151,4 @@ contains
     lsolve = B
   end function lsolve
 
-end program q1
+end program spectral

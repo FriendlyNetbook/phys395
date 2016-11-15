@@ -1,49 +1,21 @@
-program q1
+program accuracyTest
   real, parameter :: hBar=1, w = 1, m=1
   real, parameter :: h = 1E-3
 
   real :: init(2) =[0.0,1.0]
   integer j
 
-  do j=0,9
-     call integrate(j*0.2, init)
-  end do
 
-  init = [1.0, 0.0]
-  do j=0,9
-     call integrate(j*0.2,init)
-  end do
-  
+
 contains
-  subroutine integrate(E, init)
-    real psi(2) ! Wavefunction
-    real minusPsi(2) ! Wavefunction given by psi(-x)
-    real x, init(2)
+  
+  function getPsi(E)
+    real getPsi(2) ! Wavefunction
+    real x
     real E
-    character (len=40) :: filename, filename2
-    write(filename, '(a, F3.1, a, F2.0,F2.0,a)') "Eis",E,"init",init(1),init(2), "Odd.dat"
-    open(unit = 1, file = filename)
 
-    write(filename2, fmt = '(a, F3.1, a, F2.0, F2.0, a)') "Eis",E,"init",init(1),init(2), "Even.dat"
-    open(unit = 2, file = filename2)
-
-    x=0
-    psi = init
-    minusPsi= init
-    do while  ( abs(psi(1)) < 4.0 .and. ( abs(psi(1)) > 0.1 .or. abs(psi(2)) > 0.1 ) )
-       call gl8(psi,h,x,E)
-       call gl8(minusPsi,-1*h,-1*x,E)
-
-       write(2,*) x, (psi+minusPsi)/2 ! write the even
-       write(2,*) -1*x, (psi+minusPsi)/2 ! write the even
-       write(1,*) x, (psi-minusPsi)/2 ! and odd components
-       write(1,*) -1*x, -1*(psi-minusPsi)/2 ! and odd components
-       x=x+h
-    end do
-
-    close(1)
-    close(2)
-  end subroutine integrate
+    call gl8(getPsi,h,x,E)
+  end function getPsi
   
   function V(u)
     real :: u, V
@@ -88,4 +60,6 @@ contains
     ! update the solution
     psi = psi + matmul(g,b)*h
   end subroutine gl8
-end program q1
+
+
+end program accuracyTest

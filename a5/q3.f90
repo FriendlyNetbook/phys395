@@ -1,27 +1,30 @@
-program q2; implicit none
+program q3; implicit none
 
   real, parameter :: dx = 1e-4           
   integer, parameter :: n = 5
   integer i                             
-  real y(2), even(n,2), odd(n,2) 
+  real y(2), even(n,2), odd(n,2)
 
-  do i = 1,n
-     even(i,:) = bisect(2.0*(i-1), 2.0*i, 1)
-     odd(i,:)  = bisect(2.0*(i-1), 2.0*i,-1)
+  even(1,:)= bisect(0.0,2.0,1)
+  odd(1,:)= bisect(0.0,2.0,-1)
+
+  do i = 2,n
+     even(i,:)= bisect(even(i-1,1)+0.001, even(i-1,1)+6,1)
+     odd(i,:)= bisect(odd(i-1,1)+0.001, odd(i-1,1)+6,-1)
   end do
 
   do i=1,n
      call normalizedDist(even(i,1),even(i,2),[1.0,0.0])
      call normalizedDist(odd(i,1),odd(i,2),[0.0,1.0])
   end do
-  
+ 
 contains
   subroutine normalizedDist(energy, norm, init)
     real energy, norm, x, init(2), y(2)
     character (len = 40) :: filename
     x = 0.0
 
-    write(filename, fmt = '(a, F3.1, a)') "Norm_Schrodinger_E",energy,".dat"
+    write(filename, fmt = '(a, F4.1, a)') "Norm_Anharmonic_E",energy,".dat"
     open(unit = 1, file = filename)
 
     y = init     
@@ -66,8 +69,7 @@ contains
     a = Emin; fa = calc(a,even)
     b = Emax; fb = calc(b,even)
 
-    if (fa(1)*fb(1) > 0) then
-       write(*,*) "There are no eigenvalues in one of the defined intervals"
+    if (fb(1)*fa(1) > 0) then
        call abort
     end if
 
@@ -85,13 +87,11 @@ contains
     bisect = [c, fc(2)]
   end function bisect
 
-
   pure function V(x)
     real V, x
     intent(in) x
-    V = 0.5*x**2        
+    V = 0.5*x**4        
   end function V
-
 
   subroutine evalf(x, y, dydx, E)
     real x, y(2), dydx(2), E
@@ -99,7 +99,6 @@ contains
     dydx(1) = y(2)
     dydx(2) = 2*(V(x) - E)*y(1)
   end subroutine evalf
-
 
   ! 8th order implicit Gauss-Legendre integrator
   subroutine gl8(x, y, dx, E)
@@ -121,16 +120,17 @@ contains
          0.326072577431273071313468025389000296Q0,   0.173927422568726928686531974610999704Q0  /)
 
     ! iterate trial steps
-    g = 0.0; do k = 1,12
-    g = matmul(g,a)
-    do i = 1,s
-       call evalf(x, y + g(:,i)*dx, g(:,i), E)
+    g = 0.0
+    do k = 1,12
+       g = matmul(g,a)
+       do i = 1,s
+          call evalf(x, y + g(:,i)*dx, g(:,i), E)
+       end do
     end do
- end do
-
- ! update the solution
- y = y + matmul(g,b)*dx
-end subroutine gl8
-
-end program
+    
+    ! update the solution
+    y = y + matmul(g,b)*dx
+  end subroutine gl8
+  
+end program q3
 

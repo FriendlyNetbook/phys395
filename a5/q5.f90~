@@ -1,8 +1,8 @@
 program spectral; implicit none
   real, parameter :: pi = 3.141592653589793238462643383279502884197169399375Q0
   integer, parameter :: nn = 200
-  real x(nn), psi(nn), h, L(nn,nn), Hamiltonian(nn,nn), identity(nn,nn), potential(nn), lambda, matinv(nn,nn)
-  integer i
+  real x(nn), psi(nn), h, L(nn,nn), Hamiltonian(nn,nn), identity(nn,nn), potential(nn), lambda, matinv(nn,nn), temp(nn), temp2(nn)
+  integer i, k
 
   call initgrid(x, potential)
   call initl()
@@ -13,18 +13,70 @@ program spectral; implicit none
      identity(i,i) = 1
   end do
 
-  ! initialize initial solution guess
-  call evalb(2,x,psi)
 
-  open(unit=1, file='RConv.dat')
-  
-  do i = 1,20
+  do k = 2,8
+     ! initialize initial solution guess
+     call evalb(k,x,psi)
+     do i = 1,40
+        lambda = dot_product(psi,(matmul(Hamiltonian, psi)))/dot_product(psi,psi)
+        matinv = Hamiltonian - lambda*identity
+        psi = lsolve(matinv, psi)
+        psi = psi/sqrt(sum(psi**2)*h)
+     end do
+     write(*,*) lambda
+  end do
+
+  call evalb(5,x,psi)
+  call evalb(1,x,temp)
+  psi=psi+temp
+  do i = 1,40
      lambda = dot_product(psi,(matmul(Hamiltonian, psi)))/dot_product(psi,psi)
-     write(1,*) i, log10(abs(lambda-0.5))
      matinv = Hamiltonian - lambda*identity
      psi = lsolve(matinv, psi)
      psi = psi/sqrt(sum(psi**2)*h)
   end do
+  write(*,*) lambda
+
+  call evalb(12,x,psi)
+  call evalb(1,x,temp)
+  psi=psi+temp
+  do i = 1,40
+     lambda = dot_product(psi,(matmul(Hamiltonian, psi)))/dot_product(psi,psi)
+     matinv = Hamiltonian - lambda*identity
+     psi = lsolve(matinv, psi)
+     psi = psi/sqrt(sum(psi**2)*h)
+  end do
+  write(*,*) lambda
+
+
+  call evalb(7,x,psi)
+  call evalb(15,x,temp)
+  psi=psi+temp
+  do i = 1,40
+     lambda = dot_product(psi,(matmul(Hamiltonian, psi)))/dot_product(psi,psi)
+     matinv = Hamiltonian - lambda*identity
+     psi = lsolve(matinv, psi)
+     psi = psi/sqrt(sum(psi**2)*h)
+  end do
+  write(*,*) lambda
+
+
+  call evalb(5,x,psi)
+  call evalb(17,x,temp)
+  call evalb(2,x,temp2)
+  psi=psi+temp+temp2
+  do i = 1,40
+     lambda = dot_product(psi,(matmul(Hamiltonian, psi)))/dot_product(psi,psi)
+     matinv = Hamiltonian - lambda*identity
+     psi = lsolve(matinv, psi)
+     psi = psi/sqrt(sum(psi**2)*h)
+  end do
+  write(*,*) lambda
+
+
+
+
+
 
 contains
   ! ititialize grid
@@ -90,7 +142,7 @@ contains
        if (mod(n,2) == 0) then
           Tn = Tn - 1
        else if (mod(n,2) == 1) then
-          Tn = Tn - x
+          Tn = Tn - tanh(x)
        end if
     end if
     ! Second derivative of Chebyshev polynomials

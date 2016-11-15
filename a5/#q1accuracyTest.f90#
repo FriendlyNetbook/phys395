@@ -1,57 +1,17 @@
-program q1
-  real, parameter :: hBar=1, w = 1, m=1
-  real, parameter :: h = 1E-3
-
-  real :: init(2) =[0.0,1.0]
-  integer j
+program spectral; implicit none
+  real, parameter :: pi = 3.141592653589793238462643383279502884197169399375Q0, hbar = 1, m=1
+  integer, parameter :: nn = 200
+  real, parameter :: h = 0.001
+  real x(nn), psi(nn), L(nn,nn), Hamiltonian(nn,nn), identity(nn,nn), potential(nn), lambda, matinv(nn,nn)
+  integer i
+  real :: E=1.5
 
   call initgrid(x, potential)
-  call initl
-  call inith
+  call initl()
+  call inith()
 
-  identity = 0
-  do i=1,nn
-     identity(i,i) = 1
-  end do
-
-  ! initialize initial solution guess
-  call evalb(2,x,psi)
-
-  
-
-  write(*,*) sum(matmul(H,x)
-  
 contains
-  subroutine integrate(E, init)
-    real psi(2) ! Wavefunction
-    real minusPsi(2) ! Wavefunction given by psi(-x)
-    real x, init(2)
-    real E
-    character (len=40) :: filename, filename2
-    write(filename, '(a, F3.1, a, F2.0,F2.0,a)') "Eis",E,"init",init(1),init(2), "Odd.dat"
-    open(unit = 1, file = filename)
-
-    write(filename2, fmt = '(a, F3.1, a, F2.0, F2.0, a)') "Eis",E,"init",init(1),init(2), "Even.dat"
-    open(unit = 2, file = filename2)
-
-    x=0
-    psi = init
-    minusPsi= init
-    do while  ( abs(psi(1)) < 4.0 .and. ( abs(psi(1)) > 0.1 .or. abs(psi(2)) > 0.1 ) )
-       call gl8(psi,h,x,E)
-       call gl8(minusPsi,-1*h,-1*x,E)
-
-       write(2,*) x, (psi+minusPsi)/2 ! write the even
-       write(2,*) -1*x, (psi+minusPsi)/2 ! write the even
-       write(1,*) x, (psi-minusPsi)/2 ! and odd components
-       write(1,*) -1*x, -1*(psi-minusPsi)/2 ! and odd components
-       x=x+h
-    end do
-
-    close(1)
-    close(2)
-  end subroutine integrate
-  
+    
   function V(u)
     real :: u, V
     V = 0.5*m*(u*w)**2
@@ -95,7 +55,8 @@ contains
     ! update the solution
     psi = psi + matmul(g,b)*h
   end subroutine gl8
-  ! ititialize grid
+
+    ! ititialize grid
   subroutine initgrid(x, potential)
     integer i; real x(nn), potential(nn)
     ! Initialize grid
@@ -186,4 +147,4 @@ contains
     lsolve = B
   end function lsolve
 
-end program q1
+end program spectral

@@ -1,0 +1,12 @@
+set terminal pdf
+set output 'q1.typicalSolutions.pdf'
+set ylabel "Psi"
+set xlabel "x"
+set title 'Psi_+ with initial conditions Psi=0,Psi_x=1'
+plot for [i=0:9] 'Eis0.'.i.'init0.1.Even.dat' u 1:2 w d title 'Energy = 0.'.i, for [i=0:9] 'Eis1.'.i.'init0.1.Even.dat' u 1:2 w d title 'Energy = 1.'.i
+set title 'Psi_- with initial conditions Psi=0,Psi_x=1'
+plot for [i=0:9] 'Eis0.'.i.'init0.1.Odd.dat' u 1:2 w d title 'Energy = 0.'.i, for [i=0:9] 'Eis1.'.i.'init0.1.Odd.dat' u 1:2 w d title 'Energy = 1.'.i
+set title 'Psi_+ with initial conditions Psi=1,Psi_x=0'
+plot for [i=0:9] 'Eis0.'.i.'init1.0.Even.dat' u 1:2 w d title 'Energy = 0.'.i, for [i=0:9] 'Eis1.'.i.'init1.0.Even.dat' u 1:2 w d title 'Energy = 1.'.i
+set title 'Psi_- with initial conditions Psi=1,Psi_x=0'
+plot for [i=0:9] 'Eis0.'.i.'init1.0.Odd.dat' u 1:2 w d title 'Energy = 0.'.i, for [i=0:9] 'Eis1.'.i.'init1.0.Odd.dat' u 1:2 w d title 'Energy = 1.'.i

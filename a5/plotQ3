@@ -1,0 +1,5 @@
+set terminal pdf
+set output 'q3.normalizedProbabilityDistributions.pdf'
+set ylabel "Psi"
+set xlabel "x"
+plot 'Norm_Anharmonic_E 0.5.dat' u 1:2 w d title 'Energy = 0.5','Norm_Anharmonic_E 1.9.dat' u 1:2 w d title 'Energy = 1.9','Norm_Anharmonic_E 3.7.dat' u 1:2 w d title 'Energy = 3.7','Norm_Anharmonic_E 5.8.dat' u 1:2 w d title 'Energy = 5.8','Norm_Anharmonic_E 8.1.dat' u 1:2 w d title 'Energy = 8.1','Norm_Anharmonic_E10.6.dat' u 1:2 w d title 'Energy = 10.6','Norm_Anharmonic_E13.3.dat' u 1:2 w d title 'Energy = 13.3','Norm_Anharmonic_E16.1.dat' u 1:2 w d title 'Energy = 16.1','Norm_Anharmonic_E19.0.dat' u 1:2 w d title 'Energy = 19.0','Norm_Anharmonic_E22.0.dat' u 1:2 w d title 'Energy = 22.0',

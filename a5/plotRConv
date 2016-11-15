@@ -1,0 +1,5 @@
+set terminal pdf
+set output 'RayleighConvergence.pdf'
+set ylabel "Error (log10)"
+set xlabel "x"
+plot 'RConv.dat' w lp

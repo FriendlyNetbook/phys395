@@ -1,0 +1,5 @@
+set terminal pdf
+set output 'q2.normalizedProbabilityDistributions.pdf'
+set ylabel "Psi"
+set xlabel "x"
+plot for [i=0:9] 'Norm_Schrodinger_E'.i.'.5.dat' u 1:2 w d title 'Energy = '.i.'.5'
