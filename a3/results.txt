@@ -1,0 +1,13 @@
+ Question 5
+ Using undamped Levenberg-Marquardt,
+ Number of Iterations for accuracy of 1.0e-12:           22
+Question 3
+ Local Minima of (x^2-1)^2+x
+                    x                      f(x)
+  -1.1071598725024088       -1.0561728852444641     
+  0.83756543476554224       0.92665821808114990     
+Question 1
+ Roots of x^3 - x + 1/4
+  -1.1071598716887676     
+  0.26959443640544456     
+  0.83756543528332306     

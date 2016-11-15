@@ -1,0 +1,9 @@
+Run:
+make
+
+Output located in:
+plotFit.pdf: Contains a plot of the data and the fit
+Results: Contains the fit coefficients and calculated Chi^2, indicating goodness of fit
+
+Goodness of Fit
+Calculated Chi^2 = 2.76, which is comparable to the distribution of the data.

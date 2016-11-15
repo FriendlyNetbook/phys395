@@ -1,0 +1,1 @@
+plot 'Eis2.0.dat' u 1:2 w l, 'Eis2.2.dat' u 1:2 w l, 'Eis2.4.dat' u 1:2 w l, 'Eis2.6.dat' u 1:2 w l, 'Eis2.8.dat' u 1:2 w l, 'Eis3.0.dat' u 1:2 w l, 'Eis3.2.dat' u 1:2 w l, 'Eis3.4.dat' u 1:2 w l, 'Eis3.6.dat' u 1:2 w l, 'Eis3.8.dat' u 1:2 w l

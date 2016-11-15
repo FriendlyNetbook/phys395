@@ -1,0 +1,13 @@
+# Example Makefile
+
+# Compiler Configuration
+FC = ifort
+FFLAGS = -O3 -ipo -xHOST -heap-arrays 256 -r8 -pc80 
+#LDFLAGS = -static-intel
+
+# Dependencies
+all: fibonacci
+
+# Generic Compilation Rules
+$(BINDIR)/%: %.f90
+	$(FC) $(FFLAGS) $(INCS) $^ -o $@ $(LDFLAGS) $(LIBS)

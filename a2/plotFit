@@ -1,0 +1,6 @@
+set terminal pdf
+set output 'plotFit.pdf'
+set ylabel "y"
+set xlabel "x"
+plot 'Assignment #2.dat' title 'data' with dots, 'FitEvaluation' title 'fit' with lines lw 5
+

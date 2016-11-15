@@ -1,0 +1,5 @@
+set terminal pdf
+set output 'tracePlot.pdf'
+set ylabel "x"
+set xlabel "y"
+plot 'traceData' w l

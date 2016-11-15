@@ -1,0 +1,6 @@
+#!/bin/env gnuplot
+
+# configure output
+
+set output "fibonacci.pdf"
+plot 'fibonacci.dat'

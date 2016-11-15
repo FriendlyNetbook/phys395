@@ -1,0 +1,7 @@
+set xrange [-2:2]
+set yrange [-2:2]
+
+frame = 0
+plot 'animateData' index frame using 1:2 w l
+load 'animate.gpl'
+exit gnuplot

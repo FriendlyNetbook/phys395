@@ -1,0 +1,5 @@
+set terminal pdf
+set output 'ConvergencePath.pdf'
+set ylabel "y"
+set xlabel "x"
+plot 'data.dat' u 2:3 w lp title 'Position'

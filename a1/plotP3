@@ -1,0 +1,22 @@
+set terminal pdf
+set output 'Pt3.pdf'
+
+set multiplot layout 2,2 rowsfirst
+
+set label "Lobatto Grid, N=10" at graph 0.5,0.5 center
+plot 'data_Pt3_lobatto_N10' using 1:2 with lines title "Function Derivative", 'data_Pt3_lobatto_N10' using 1:3 with lines title "Interpolant Derivative"
+unset label
+set label "Uniform Grid, N=10" at graph 0.5,0.5 center
+plot 'data_Pt3_uniform_N10' using 1:2 with lines title "Function Derivative", 'data_Pt3_uniform_N10' using 1:3 with lines title "Interpolant Derivative"
+unset label
+set label "Lobatto Grid, N=100" at graph 0.5,0.5 center
+plot 'data_Pt3_lobatto_N100' using 1:2 with lines title "Function Derivative", 'data_Pt3_lobatto_N100' using 1:3 with lines title "Interpolant Derivative"
+unset label
+set label "Uniform Grid, N=100" at graph 0.5,0.5 center 
+plot 'data_Pt3_uniform_N100' using 1:2 with lines title "Function Derivative", 'data_Pt3_uniform_N100' using 1:3 with lines title "Interpolant Derivative"
+
+
+unset multiplot
+
+
+

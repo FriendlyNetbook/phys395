@@ -1,0 +1,22 @@
+* Interpolation Bases 
+ + The taylor basis becomes increasingly ill conditioned with the order, due to the limiting behaviour of the functional x^n in n
+ + The fourier basis is better
+   + Cannot just use sin with no phase shift as a large chunk is missing near 0 due to sin being purely an odd function
+     + use cosine as well
+   + poor at approximating sharp corners (limits to a spike at the corner decreasing in width but not height)
+ + Solution is the chebyshev family of polynomials Tn(x) = cos(n arccos(x))
+   + 
+ + Legendre Polynomials
+   + 
+ + Hermite Polynomials
+   + appears often in QM
+ + Laguerre Polynomials
+   + appears if you want to do fourier trasforms with bessel functions
+* Numerical Integration 
+ + Integration can usually be derived in an explicit form from the polynomial interpolation coefficients
+ + Differentiation is similar, but tends to be ill-posed
+   + 
+* Assignment
+ + Approximate 1/(1+x^2) using multiple bases
+ + Higher order does not necessarily give higher accuracy
+ + 

@@ -1,0 +1,5 @@
+set terminal pdf
+set output 'energyErrorPlot.pdf'
+set ylabel "Energy Error"
+set xlabel "t"
+plot 'energyError' w l

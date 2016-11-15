@@ -1,0 +1,56 @@
+program MatrixSolve; implicit none
+  integer, parameter :: n = 3
+  real :: A(n,n) = reshape([4,3,1,0,1,5,1,2,0],[n,n]) !Matrix
+  real :: b(n) = [2,1,4], x(n)
+  real :: pivot(n,n) = 0!Keep Track of pivoting
+  real :: temporary(n), multiplier
+  integer :: i = 0, j = 0, temp2 = 0, t
+  real :: temp = 0.0
+  do i=1,n
+     write(*,*) A(i,:)
+  end do
+  write(*,*) 'printed A'
+  
+  do i=1, n !Make Pivot-tracking matrix initially I
+     pivot(i,i) = 1
+  end do
+  do i=1, n !index row of matrix
+     temp = A(i,i) !find the ith pivot
+     temp2 = i
+     do j=i+1, n 
+        if (A(i,j) > temp) then
+           temp2 = j
+           temp = A(i,j)
+        end if
+     end do
+     temporary = A(temp2,:) !copy the pivot row
+     A(:,temp2) = A(:,i) !swap it with the ith row
+     A(:,i) = temporary
+     temporary = pivot(:,temp2) ! do the same for the pivot matrix
+     pivot(:,temp2) = pivot(:,i)
+     pivot(:,i) = temporary
+     do j=i+1, n !index column of matrix
+        multiplier = A(i,j)/A(i,i) !compute multiplier based on pivot element
+        A(:,j) = A(:,j)-multiplier*A(:,i) !subtract
+        A(i,j) = 0 !prevent rounding error here
+        b(j) = b(j)-multiplier*b(i) !
+     end do
+     do t=1,n
+        write(*,*) A(i,:)
+     end do
+     write(*,*) 'printed A'
+  end do
+  do i=1,n
+     write(*,*) A(i,:)
+  end do
+  write(*,*) b
+  x(n) = b(n)/A(n,n)
+  do i=1,n-1 ! index row where i is the n-i'th row, i.e. solving the n-i'th eqn
+     x(n-i) = b(n-i)
+     do j=0,i-1 !index column where j is the n-j'th col, i.e. eliminating the n-j'th coeff.
+        x(n-i)= x(n-i) - A(n-i,n-j)*x(n-j)
+     end do
+     x(n-i) = x(n-i) / A(n-i,n-i)
+  end do
+  write(*,*) x
+end program MatrixSolve

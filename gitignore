@@ -1,0 +1,7 @@
+#ignore data files
+*.dat
+
+# ignore derived plots
+*.eps
+*.pdf
+#etc...

@@ -1,0 +1,110 @@
+* Lecture 1 
+* Lecture 2
+** Assignment Marking
+ - See Rubric
+
+** git use is recommended
+ + .gitignore
+   +to ignore fortran binaries, add a.out \n *.o \n *.
+** building 
+ + bash script to compile
+ + make file
+   + see sample make file
+   + can add other tasks into makefile - e.g. gnuplot
+   + 
+  
+* Lecture 4
+ + Matrix multiplication\inversion problems may be reduced to a minimization problem
+   + More resistant to noise, robust (in both senses)
+   + Produces a unique solution versus a set of possibilities in an ill-posed case
+   + In the case of an over-determined system, can add flexibility e.g. (Bc=f -> (Bc-f)^2+lc'Rc)
+ + The alternative is Gaussian Elimination with Partial (Or Full) Pivoting (Recall)
+   + 
+   + 
+* Lecture 5
+** Assignment
+** Over/Under-determined problems
+ + overdetermined and underdetermined are not mutually exclusive
+** fff
+ + An optimal interpolant may be derived by minimizing the total X^2 value of the interpolant
+** LAPACK
+ + Lapack users guide is very useful
+ + Has a section for linear least squares problems
+   + minimize for x: ||b-Ax||^2
+   + want to use SVD algorithm
+ + Generalized linear least squares
+ + Matrix Decompositions
+   + LU Decomposition
+     + Essentially GE -> gives Lower and upper triangular product 
+   + QR factorization
+     + Factorizing into an orthogonal (Q) and upper triangular (R)
+     + Orthogonal matrices usually represent rotation - do not affect the norm
+     + Has low error in general
+   + Singular Value Decomposition
+     + eigendecomposition
+** Random Number Generation in fortran
+ + Box-Miller transform
+ + random_number(A) fills A with random data (must be randomly seeded to not always return the same)
+   + produces a poor dataset, as it is limited between -1 and 1. So we shape it by A=tan(pi*(A-0.5))
+ + seeding done simply by calling RANDOM_SEED 
+** Linear Regression
+ + solve the linear system sum of x(ax+b-y) = 0, sum (ax+b-y) = 0 (given by the fixed points of chi^2)
+* Lecture 6
+** Principle Component Analysis
+  + Useful for ill-conditioned matrices
+  + Frequently used in fitting problems
+  + Chi^2 = \sum |y_i-f(x_i)|^2 / \sigma^2
+    + Susceptible to outliers
+  + or minimizie \sum |y_i - f(x_i)|/ \sigma
+    + More robust
+    + 
+    + Not well suited to derivative-based minimum-finding operations
+** Root-Finding
+ + check if there is a root first if possible
+ + Exploit knowledge of roots as much as possible
+*** Bisection
+ + Cannot be used for multidimensional functions
+*** Newton's Method
+ + Most accurate once you are already near the root, or if the function is well behaved
+ + Requires Derivative
+** Minimization Problems
++ Related to root-finding, can take the derivative an minimize
+  + This is a poor approach - as it is generally more difficult to find the root than minimize
++ Bisection
+  + Cannot be used for multi-dimensional functions
++ Method of Steepest Descent
+  + Slow convergence
+  + tendency to 'bounce' ???
++ 
+* Lecture Unknown
+** Upcoming Assignment
+** 
+Sobol's sequence
+* Help, I've fallen and I can't get up (!)
+** PDEs
+*** Initial Value Problems
+ + Euler's Method
+   + Forward-Euler Method
+   + Backward-Euler Method
+ + Leapfrog Method
+ + Runge-Kutta Methods
+   + RK4
+ + Symplectic Integrators
+   + Forces conservation of phase space, rather than conservation of energy or something
+ + 
+*** Symplectic Integrators
+** h
+V(phi)
+(del phi)^2
+E=int[(del phi)^2/2 + V(phi)]
+dE = int (del phi del dPhi) + V'dPhi = int [-del^2 phi + V']dPhi dt
+*** Relaxation Methods
+want to solve: del^2 phi = dV/dphi
+how can we use newton's method
+del^2 dphi - d^2V/dphi^2 dphi = Residual
+phi -> phi -dphi
+
+** Spectral Methods
+Recommended Text: Boyd - pseudospectral Methods
+
+

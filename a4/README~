@@ -1,0 +1,10 @@
+Question 1 (q12.f90)
+see the make output and the 'energyError' file
+
+Question 2 (q12.f90)
+see the 'ConvergencePath.pdf', 'energyErrorPlot.pdf', 'energyError', and 'traceData' files
+To view the animation run 'gnuplot plotanimate' after running 'make'
+
+Question 3 (q3.f90)
+See the fractal1.fit to fractal4.fit files, showing a zoom to a region in the fractal produced
+Additional files computed using higher resolution and a greater depth are available in the precomputed_fractal1.fit to precomputed_fractal4.fit files.

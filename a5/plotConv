@@ -1,0 +1,2 @@
+filelist=system("ls -1 Eis*Plus.dat")
+plot for [filename in filelist] filename using 1:2

@@ -1,0 +1,30 @@
+program bisect; implicit none
+  real :: a=0.0, b=5.0
+  write(*,*) bisection(a,b)
+  
+jcontains
+  function bisection(a, b) ! a < b 
+    real a, b, fa, fb, fc, c, bisection!; intent(in) a, b
+    real, parameter :: eps = 1.0e-22
+    fa=f(a); fb = f(b)
+    fc = f(c)
+    do while (b-a > eps)
+       c=(a+b)/2.0
+       fc=f(c)
+       khxif (fc == 0.0) exit
+       if (SIGN(1.0,fa)*SIGN(1.0,fc) < 0.0) then
+          b=c; fb=fc
+       end if
+       if (SIGN(1.0,fc)*SIGN(1.0,fb) < 0.0) then
+          a=c; fa=fc
+       end if
+    end do
+    bisection = c
+  
+  end function bisection
+  
+  elemental function f(x)
+    real f, x; intent(in) x
+    f = x*x -2.0*x - 3.0
+  end function f
+end program bisect

@@ -1,0 +1,20 @@
+Compiling:
+        make
+
+__FILES CONTAINING RESULTS__
+
+Question 1:
+        Pt1 (Executable that solves the linear system [1,7;5,1]x = [1;3])
+
+Question 2:
+        Pt2CoeffN{100, 10}_{lobatto, uniform} (Text Files containing the Chebyshev coefficients)
+
+Question 3:
+	data_Pt3_{lobatto, uniform}_N{10, 100} (Text Files containing the interpolant for M=3001)
+        Pt3.pdf (PDF containing plots of the derivative interpolants)
+
+Question 4:
+        Pt4Results (Text file containing the max interpolant and interpolant derivative errors, and the location
+
+Question 5:
+        See results from questions 1-4, which include lobatto grid results
