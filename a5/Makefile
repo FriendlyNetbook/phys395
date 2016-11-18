@@ -32,4 +32,5 @@ q1.typicalSolutions.pdf: q1
 	$(FC) $(FFLAGS) $^ -o $@ $(LDFLAGS)
 
 clean:
-	rm *.dat *.pdf
+	rm *.dat *.pdf R*.txt
+

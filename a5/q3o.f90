@@ -2,35 +2,38 @@ program q3; implicit none
 
   real, parameter :: dx = 1e-4           
   integer, parameter :: n = 10
-  integer i, j, flag, flagup
-  real y(2), even(n/2+2,2), odd(n/2+2,2), delta, start(2), epsilon
+  integer i, flag, flagup
+  real y(2), points(n,2), start(2), delta
   delta = 0.5
-  epsilon = 0.0001
-  i=1
-  j=1
+  i=0
+  flag = 0
   start = 0
-  do while (i+j < n+1)
-     even(i,:)= bisect(start(1), start(1)+delta,1, flag)
-     if(flag == 1) then
-        start(1) = start(1) + delta
-     else
-        start(1) = even(i,1)+epsilon
-        i=i+1
-     end if
-     odd(j,:)= bisect(start(2), start(2)+delta,-1, flag)
-     if(flag == 1) then
-        start(2) = start(2) + delta
-     else
-        start(2) = odd(j,1)+epsilon
-        j=j+1
-     end if
-  end do
-  write(*,*) even(:,1), odd(:,1)
 
-  do i=1,n/2
-     call normalizedDist(even(i,1),even(i,2),[1.0,0.0])
-     call normalizedDist(odd(i,1),odd(i,2),[0.0,1.0])
+  do while (i < n)
+     flag = 0
+     flagup = 0
+     points(i,:)= bisect(start(1), start(1)+delta,1, flag)
+     if(flag == 1) then
+        start(1) = start(1)+delta
+     else
+        start(1) = points(i,1)+0.00001
+        i=i+1
+        write(*,*) start(1)
+     end if
+
+     points(i,:)= bisect(start(2), start(2)+delta,-1,flagup)
+     if (flagup == 1) then
+        flag = 1
+        start(2) = start(2)+delta
+     else
+        start(2) = points(i,1)+0.00001
+        i=i+1
+        write(*,*) start(2)
+     end if
+     write(*,*) i, start, delta
   end do
+
+  write(*,*) points(:,1)
  
 contains
   subroutine normalizedDist(energy, norm, init)
@@ -149,3 +152,4 @@ contains
   end subroutine gl8
   
 end program q3
+

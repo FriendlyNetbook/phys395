@@ -1,6 +1,6 @@
 program q1
   real, parameter :: hBar=1, w = 1, m=1
-  real, parameter :: h = 1E-3
+  real, parameter :: h = 1E-4
 
   real :: init(2) =[0.0,1.0]
   integer j

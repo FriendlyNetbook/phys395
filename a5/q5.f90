@@ -71,7 +71,7 @@ contains
        psi = lsolve(matinv, psi)
        psi = psi/sqrt(sum(psi**2)*h)
     end do
-    write(*,*) lambda
+    write(1,*) lambda
   end subroutine getlamb
   
   
