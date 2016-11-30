@@ -1,0 +1,10 @@
+set terminal gif size 1000,460 animate delay 5
+set output 'q3.gif'
+stats 'q3data.dat' nooutput
+set yrange [-0.5:0.5]
+
+do for [i=1:int(STATS_blocks)-1] {
+        set title "Psi(x,0) = exp(-(x-1)^2/2)"
+        plot 'q3data.dat' using 1:2 index (i-1) with lines title "Re(Psi)" linewidth 2 linecolor rgb "red", 'q3data.dat' using 1:3 index (i-1) with lines title "Imag(Psi)" linewidth 2 linecolor rgb "blue", 'q3data.dat' using 1:4 index (i-1) with lines title "|Psi|^2" linewidth 2 linecolor rgb "black"
+
+}
